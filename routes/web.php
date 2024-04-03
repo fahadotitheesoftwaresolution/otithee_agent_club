@@ -12,6 +12,7 @@ use App\Http\Controllers\{
     PublicationController,
     TutorialController,
     AgentClubRankingController,
+    FingerController,
 };
 use App\Http\Controllers\Auth\AuthController;
 
@@ -29,6 +30,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('agent_profile', AgentProfileController::class);
 //Agent Club Ranking
 Route::resource('agent_club_ranking', AgentClubRankingController::class);
+//Finger Print
+Route::resource('finger_p', FingerController::class);
 //Planning & Scheduling
 Route::resource('plannings', PlanningController::class);
 //Training Schedule
