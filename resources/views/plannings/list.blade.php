@@ -252,9 +252,77 @@
       <div class="container-fluid">
 
 		
-		
-			Planning
-		
+		  <!-- Fahad Ahmed -->
+      <div class="card">
+    <div class="card-body">
+
+    <p>
+        <a href="{{ route('plannings.create') }}" class="btn btn-primary btn-rounded btn-fw btn-sm"> <i class="mdi mdi-loupe align-middle"></i> Create New</a>
+    </p>
+
+        <div class="table-responsive">
+            <table class="table table-striped dataTable">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Title</th>
+                        <th>Plan</th>
+                        <th>Schedule</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- Serial number counter --}}
+                    @php
+                        $serial = ($planning->currentPage() - 1) * $planning->perPage() + 1;
+                    @endphp
+                    @foreach ($planning as $plannings)
+                        <tr>
+                            <td>{{ $serial++ }}</td> {{-- Display serial number --}}
+                            <td>{{ $plannings->title }}</td>
+                            <td>{{ $plannings->plan }}</td>
+                            <td>{{ $plannings->schedule }}</td>
+                            <td>{{ $plannings->status }}</td>
+                            <td>
+                              {{-- View button --}}
+                              <a class="btn btn-success btn-sm" href="{{ route('plannings.show', $plannings->id) }}">
+                                  View
+                              </a>
+                              {{-- Edit button --}}
+                              <a class="btn btn-info btn-sm" href="{{ route('plannings.edit', $plannings->id) }}">
+                                  Edit
+                              </a>
+                              {{-- Delete button --}}
+                              <form action="{{ route('plannings.destroy', $plannings->id) }}" method="POST" style="display: inline-block;">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit" class="btn btn-danger btn-sm"  onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                              </form>
+                          </td>
+                        </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+        </div>
+        <br>
+        {{-- Displaying number of items --}}
+        <p>Showing {{ $planning->firstItem() }} to {{ $planning->lastItem() }} of {{ $planning->total() }} items</p>
+        {{-- Pagination links --}}
+        <!-- Pagination Links -->
+        <div class="pagination">
+            @if ($planning->previousPageUrl())
+                <a href="{{ $planning->previousPageUrl() }}" class="btn">&laquo; Previous</a>
+            @endif
+
+            @if ($planning->nextPageUrl())
+                <a href="{{ $planning->nextPageUrl() }}" class="btn">Next &raquo;</a>
+            @endif
+        </div>
+    </div>
+</div>
+
 		
 
 		
@@ -275,6 +343,30 @@
   <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/dashboard.js"></script>
+  <script>
+    // Assuming you're using AJAX for the delete request
+
+// Example AJAX call
+$.ajax({
+    url: '/plannings/' + id, // Assuming your delete endpoint is /plannings/{id}
+    type: 'DELETE',
+    success: function(response) {
+        if (response.status === 1) {
+            // Deletion successful
+            alert(response.message); // Display success message
+            window.location.href = '/plannings'; // Redirect to the index page
+        } else {
+            // Deletion failed
+            alert(response.error); // Display error message
+        }
+    },
+    error: function(xhr, status, error) {
+        // Error handling
+        console.error(xhr.responseText);
+    }
+});
+
+  </script>
 </body>
 
 </html>
