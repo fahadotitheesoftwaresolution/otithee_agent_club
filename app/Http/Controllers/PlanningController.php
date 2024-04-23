@@ -13,7 +13,7 @@ class PlanningController extends Controller
      */
     public function index()
     {
-        $planning = DB::table('planning')->paginate(10); // Change get() to paginate()
+        $planning = DB::table('planning')->paginate(1); // Change get() to paginate()
         return view('plannings.list',compact('planning'));
     }
 
@@ -32,29 +32,21 @@ class PlanningController extends Controller
     {
         // Validate incoming request data
         $request->validate([
-            'rank_name' => 'required|string',
-            'users' => 'required|string',
-            'agents' => 'required|string',
-            'properties' => 'required|string',
-            'commission' => 'required|string',
-            'global' => 'required|string',
-            'entry_by' => 'required|string',
-            'created_at' => 'required|string',
-            'updated_at' => 'required|string',
+            'id' => 'required|string',
+            'title' => 'required|string',
+            'plan' => 'required|string',
+            'schedule' => 'required|string',
+            'status' => 'required|string',
             // Add more validation rules as necessary
         ]);
 
         // Insert data into the database
         DB::table('planning')->insert([
-            'rank_name' => $request->rank_name,
-            'users' => $request->users,
-            'agents' => $request->agents,
-            'properties' => $request->properties,
-            'commission' => $request->commission,
-            'global' => $request->global,
-            'entry_by' => $request->entry_by,
-            'created_at' => $request->created_at,
-            'updated_at' => $request->updated_at,
+            'id' => $request->id,
+            'title' => $request->title,
+            'plan' => $request->plan,
+            'schedule' => $request->schedule,
+            'status' => $request->status,
             // Add more fields as necessary
         ]);
 
@@ -87,29 +79,21 @@ class PlanningController extends Controller
     {
         // Validate incoming request data
         $request->validate([
-            'rank_name' => 'required|string',
-            'users' => 'required|string',
-            'agents' => 'required|string',
-            'properties' => 'required|string',
-            'commission' => 'required|string',
-            'global' => 'required|string',
-            'entry_by' => 'required|string',
-            'created_at' => 'required|string',
-            'updated_at' => 'required|string',
+            'id' => 'required|string',
+            'title' => 'required|string',
+            'plan' => 'required|string',
+            'schedule' => 'required|string',
+            'status' => 'required|string',
             // Add more validation rules as necessary
         ]);
 
         // Update data in the database
         DB::table('planning')->where('id', $id)->update([
-            'rank_name' => $request->rank_name,
-            'users' => $request->users,
-            'agents' => $request->agents,
-            'properties' => $request->properties,
-            'commission' => $request->commission,
-            'global' => $request->global,
-            'entry_by' => $request->entry_by,
-            'created_at' => $request->created_at,
-            'updated_at' => $request->updated_at,
+            'id' => $request->id,
+            'title' => $request->title,
+            'plan' => $request->plan,
+            'schedule' => $request->schedule,
+            'status' => $request->status,
             // Add more fields as necessary
         ]);
 
